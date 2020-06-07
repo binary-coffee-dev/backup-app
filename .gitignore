@@ -1,5 +1,9 @@
 # application
 store-key.json
+images
+backups
+compress_files
+.env
 
 # utils
 .idea
