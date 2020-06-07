@@ -3,7 +3,6 @@ const path = require('path');
 
 const archiver = require('archiver');
 
-
 async function compressAction(compressFile, actions) {
     return new Promise((resolve, reject) => {
         const output = fs.createWriteStream(compressFile);
