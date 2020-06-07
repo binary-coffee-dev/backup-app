@@ -38,8 +38,7 @@ cron.schedule("* 10 0 * * *", function () {
     runScript(scriptPaths.compress)
         .then(() => {
             console.log(`compress files successful at ${new Date()}`);
-            return Promise.resolve();
-            // return runScript(scriptPaths.upload);
+            return runScript(scriptPaths.upload);
         })
         .then(() => {
             console.log(`files were uploaded successful at ${new Date()}`);
