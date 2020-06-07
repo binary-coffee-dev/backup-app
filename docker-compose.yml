@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  deploy:
+    build:
+      context: .
+    restart: always
+    volumes:
+      - ${EXTERNAL_IMAGES_PATH}:/app/images
+      - ${EXTERNAL_BACKUPS_PATH}:/app/backups
+      - ${EXTERNAL_COMPRESS_FILES_PATH}:/app/compress_files
