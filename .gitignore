@@ -1,9 +1,13 @@
 # application
 store-key.json
-images
-backups
-compress_files
 .env
+
+images/*
+!images/.gitkeep
+backups/*
+!backups/.gitkeep
+compress_files/*
+!compress_files/.gitkeep
 
 # utils
 .idea
