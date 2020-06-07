@@ -71,22 +71,23 @@ function getTimeFormat() {
 }
 
 async function createImagesZIP() {
-    const files = fs.readdirSync(process.env['IMAGES_PATH']);
+    const files = fs.readdirSync(path.join(__dirname, 'images'));
     const images = [];
-    files.forEach(file => images.push(path.join(process.env['IMAGES_PATH'], file)));
+    files.forEach(file => images.push(path.join(__dirname, 'images', file)));
     const imagesBackupName = `images.${getTimeFormat()}.zip`;
-    await compressFiles(images, path.join(process.env['COMPRESS_FILES_PATH'], imagesBackupName));
+    await compressFiles(images, path.join(__dirname, 'compress_files', imagesBackupName));
 }
 
 async function createBackupZIP() {
-    const dirs = fs.readdirSync(process.env['BACKUPS_PATH']);
+    const dirs = fs.readdirSync(path.join(__dirname, 'backups'));
     dirs.sort();
-    const lastBackup = path.join(process.env['BACKUPS_PATH'], dirs[dirs.length - 1]);
+    const lastBackup = path.join(__dirname, 'backups', dirs[dirs.length - 1]);
     const databaseBackupName = `backups.${getTimeFormat()}.zip`;
-    await compressDir(lastBackup, path.join(process.env['COMPRESS_FILES_PATH'], databaseBackupName))
+    await compressDir(lastBackup, path.join(__dirname, 'compress_files', databaseBackupName))
 }
 
 function main() {
+    console.log(process.env);
     createImagesZIP();
     createBackupZIP()
 }

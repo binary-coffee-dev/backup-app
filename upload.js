@@ -29,18 +29,18 @@ function main() {
     }
 
     async function uploadBackups() {
-        const databases = fs.readdirSync(process.env['COMPRESS_FILES_PATH']).filter(file => file.startsWith('backups.'));
-        const images = fs.readdirSync(process.env['COMPRESS_FILES_PATH']).filter(file => file.startsWith('images.'));
+        const databases = fs.readdirSync(path.join(__dirname, 'compress_files')).filter(file => file.startsWith('backups.'));
+        const images = fs.readdirSync(path.join(__dirname, 'compress_files')).filter(file => file.startsWith('images.'));
 
         if (databases.length > 0) {
             databases.sort();
-            const databasesBackupPath = path.join(process.env['COMPRESS_FILES_PATH'], databases[databases.length - 1]);
+            const databasesBackupPath = path.join(__dirname, 'compress_files', databases[databases.length - 1]);
             await uploadFiles(bucketsList.databases, [databasesBackupPath]);
         }
 
         if (images.length > 0) {
             images.sort();
-            const imagesBackupPath = path.join(process.env['COMPRESS_FILES_PATH'], images[images.length - 1]);
+            const imagesBackupPath = path.join(__dirname, 'compress_files', images[images.length - 1]);
             await uploadFiles(bucketsList.images, [imagesBackupPath]);
         }
     }
