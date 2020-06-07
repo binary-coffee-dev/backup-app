@@ -5,11 +5,13 @@
   "scripts": {
     "start:setup": "node setup-store.js",
     "start:compress": "node compress-files.js",
-    "start": "node upload.js"
+    "start:upload": "node upload.js",
+    "start": "node cron-app.js"
   },
   "dependencies": {
     "@google-cloud/storage": "^5.0.1",
-    "archiver": "^4.0.1"
+    "archiver": "^4.0.1",
+    "node-cron": "^2.0.3"
   },
   "devDependencies": {},
   "author": "",

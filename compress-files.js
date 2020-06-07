@@ -87,9 +87,8 @@ async function createBackupZIP() {
 }
 
 function main() {
-    console.log(process.env);
     createImagesZIP();
-    createBackupZIP()
+    createBackupZIP();
 }
 
 main();
