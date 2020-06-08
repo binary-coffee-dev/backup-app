@@ -33,7 +33,7 @@ const scriptPaths = {
 };
 
 // Save information every day at 0:10 of the morning
-cron.schedule("* 10 0 * * *", function () {
+cron.schedule("0 10 0 * * *", function () {
     console.log("running a task every minute");
     runScript(scriptPaths.compress)
         .then(() => {
