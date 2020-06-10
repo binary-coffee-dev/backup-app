@@ -67,7 +67,7 @@ function fillWithZero(number, size) {
 
 function getTimeFormat() {
     const now = new Date();
-    return `${now.getFullYear()}.${fillWithZero(now.getMonth(), 2)}.${fillWithZero(now.getDate(), 2)}.${fillWithZero(now.getTime(), 15)}`
+    return `${now.getFullYear()}.${fillWithZero(now.getMonth() + 1, 2)}.${fillWithZero(now.getDate(), 2)}.${fillWithZero(now.getTime(), 15)}`
 }
 
 async function createImagesZIP() {
