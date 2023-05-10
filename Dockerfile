@@ -12,6 +12,6 @@ RUN npm install
 
 # Copy script files auth key
 COPY ./scripts ./scripts
-COPY main.js .env ./
+COPY main.js .env store-key.json ./
 
 CMD ["npm", "start"]
