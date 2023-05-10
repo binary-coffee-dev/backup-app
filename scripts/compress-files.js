@@ -3,6 +3,8 @@ const path = require('path');
 
 const archiver = require('archiver');
 
+const rootPath = path.join(__dirname, '..');
+
 async function compressAction(compressFile, actions) {
     return new Promise((resolve, reject) => {
         const output = fs.createWriteStream(compressFile);
@@ -70,25 +72,31 @@ function getTimeFormat() {
     return `${now.getFullYear()}.${fillWithZero(now.getMonth() + 1, 2)}.${fillWithZero(now.getDate(), 2)}.${fillWithZero(now.getTime(), 15)}`
 }
 
+async function createZIP(folderName, prefixName) {
+    const filesNames = fs.readdirSync(path.join(rootPath, folderName));
+    const files = filesNames.filter(f => f !== '.gitkeep').map(file => path.join(rootPath, folderName, file));
+    const imagesBackupName = `${prefixName}.${getTimeFormat()}.zip`;
+    await compressFiles(files, path.join(rootPath, 'compress_files', imagesBackupName));
+}
+
 async function createImagesZIP() {
-    const files = fs.readdirSync(path.join(__dirname, 'images'));
-    const images = [];
-    files.forEach(file => images.push(path.join(__dirname, 'images', file)));
-    const imagesBackupName = `images.${getTimeFormat()}.zip`;
-    await compressFiles(images, path.join(__dirname, 'compress_files', imagesBackupName));
+    await createZIP('images', 'images');
 }
 
 async function createBackupZIP() {
-    const dirs = fs.readdirSync(path.join(__dirname, 'backups'));
-    dirs.sort();
-    const lastBackup = path.join(__dirname, 'backups', dirs[dirs.length - 1]);
-    const databaseBackupName = `backups.${getTimeFormat()}.zip`;
-    await compressDir(lastBackup, path.join(__dirname, 'compress_files', databaseBackupName))
+    await createZIP('backups', 'backups');
 }
 
-function main() {
-    createImagesZIP();
-    createBackupZIP();
+function cleanOldBackups() {
+    const filesNames = fs.readdirSync(path.join(rootPath, 'compress_files'));
+    const files = filesNames.filter(f => f !== '.gitkeep').map(file => path.join(rootPath, 'compress_files', file));
+    files.forEach(f => fs.unlinkSync(f));
 }
 
-main();
+async function main() {
+    await cleanOldBackups();
+    await createImagesZIP();
+    await createBackupZIP();
+}
+
+main().then();
