@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "description": "Store automatically al the Binary Coffee information",
   "scripts": {
-    "start:setup": "node setup-store.js",
-    "start:compress": "node compress-files.js",
-    "start:upload": "node upload.js",
-    "start": "node cron-app.js"
+    "start:setup": "node scripts/setup-store.js",
+    "start:compress": "node scripts/compress-files.js",
+    "start:upload": "node scripts/upload.js",
+    "start": "node scripts/cron-app.js"
   },
   "dependencies": {
-    "@google-cloud/storage": "^5.0.1",
+    "@google-cloud/storage": "^5.20.5",
     "archiver": "^4.0.1",
     "node-cron": "^2.0.3"
   },
