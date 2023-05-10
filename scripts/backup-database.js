@@ -15,7 +15,7 @@ const config = {
 async function execute() {
     await removeFilesStartWith('database.backup.', path.join(rootPath, 'compress_files'));
 
-    const backupFileName = path.join(rootPath, 'compress_files', `database.backup.${config.databaseName}.${getTimeFormat()}.sql.gz`);
+    const backupFileName = path.join(rootPath, 'compress_files', `database.backup.${config.databaseName}.${getTimeFormat()}.sql`);
     await mysqldump({
         connection: {
             host: config.databaseHost,
@@ -25,7 +25,7 @@ async function execute() {
             database: config.databaseName,
         },
         dumpToFile: backupFileName,
-        compressFile: true,
+        compressFile: false,
     });
 }
 

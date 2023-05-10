@@ -51,20 +51,33 @@ async function compressFiles(files, compressFile) {
     return Promise.reject();
 }
 
-async function createZIP(folderName, prefixName) {
-    const filesNames = fs.readdirSync(path.join(rootPath, folderName));
-    const files = filesNames.filter(f => f !== '.gitkeep').map(file => path.join(rootPath, folderName, file));
-    const imagesBackupName = `${prefixName}.${getTimeFormat()}.zip`;
+async function createImagesZIP() {
+    const filesNames = fs.readdirSync(path.join(rootPath, 'images'));
+    const files = filesNames.filter(f => f !== '.gitkeep')
+      .map(file => path.join(rootPath, 'images', file));
+    const imagesBackupName = `images.backup.${getTimeFormat()}.zip`;
     await compressFiles(files, path.join(rootPath, 'compress_files', imagesBackupName));
 }
 
-async function createImagesZIP() {
-    await createZIP('images', 'images.backup');
+async function createBackupZIP() {
+    const filesNames = fs.readdirSync(path.join(rootPath, 'compress_files'));
+    const fileName = filesNames
+      .filter(f => f !== '.gitkeep')
+      .filter(f => f.endsWith('.sql'))
+      .filter(f => f.startsWith('database.backup'))[0];
+    const filePath = path.join(rootPath, 'compress_files', fileName);
+    const compressedFilePath = path.join(rootPath, 'compress_files', `${fileName}.zip`);
+    if (fs.existsSync(compressedFilePath)) {
+        fs.unlinkSync(compressedFilePath);
+    }
+    await compressFiles([filePath], compressedFilePath);
+    fs.unlinkSync(path.join(rootPath, 'compress_files', fileName));
 }
 
 async function main() {
     await removeFilesStartWith('images.', path.join(rootPath, 'compress_files'));
     await createImagesZIP();
+    await createBackupZIP();
 }
 
 main().then();
