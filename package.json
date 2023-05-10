@@ -3,17 +3,20 @@
   "version": "1.0.0",
   "description": "Store automatically al the Binary Coffee information",
   "scripts": {
+    "start:backup": "node scripts/backup-database.js",
     "start:setup": "node scripts/setup-store.js",
     "start:compress": "node scripts/compress-files.js",
     "start:upload": "node scripts/upload.js",
-    "start": "node scripts/cron-app.js"
+    "start": "node main.js"
   },
   "dependencies": {
-    "@google-cloud/storage": "^5.20.5",
+    "@google-cloud/storage": "^6.10.0",
     "archiver": "^4.0.1",
+    "dotenv": "^16.0.3",
+    "jsonwebtoken": "^9.0.0",
+    "mysqldump": "^3.2.0",
     "node-cron": "^2.0.3"
   },
-  "devDependencies": {},
   "author": "",
   "license": "ISC"
 }

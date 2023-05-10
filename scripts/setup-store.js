@@ -1,9 +1,11 @@
 const path = require('path');
 
+const rootPath = path.join(__dirname, '..');
+
 function main() {
     const {Storage} = require('@google-cloud/storage');
 
-    const keyFile = path.join(__dirname, 'store-key.json');
+    const keyFile = path.join(rootPath, 'store-key.json');
     const storage = new Storage({keyFilename: keyFile, projectId: 'eternal-psyche-279612'});
 
     const bucketsList = [

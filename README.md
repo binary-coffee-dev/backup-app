@@ -6,7 +6,7 @@
 There is a list in the script that the user can modify and all the needed buckets will be created on his own Google Storage service.
 - `compress-files.js`: With this script is possible to compress files and directories and copy those *.zip* files to the folder `compress_files`.
 - `upload.js`: After the `.zip` files are created, with the defined structure, the latest version of those files are uploaded to Google Storage, depending on who bucket it belongs.
-- `cron-app.js`: Its the script that automatically, depending of the fixed time, executes the previous script, and saves the latest information of the database.
+- `main.js`: Its the script that automatically, depending of the fixed time, executes the previous script, and saves the latest information of the database.
 
 ## What data is saved?
 

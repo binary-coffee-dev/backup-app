@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const archiver = require('archiver');
+const {getTimeFormat, removeFilesStartWith} = require('./utils');
 
 const rootPath = path.join(__dirname, '..');
 
@@ -50,28 +51,6 @@ async function compressFiles(files, compressFile) {
     return Promise.reject();
 }
 
-async function compressDir(dir, compressFile) {
-    if (dir) {
-        return compressAction(compressFile, (archive) => {
-            archive.directory(dir, false);
-        });
-    }
-    return Promise.reject();
-}
-
-function fillWithZero(number, size) {
-    let str = number + '';
-    while (str.length < size) {
-        str = '0' + str;
-    }
-    return str;
-}
-
-function getTimeFormat() {
-    const now = new Date();
-    return `${now.getFullYear()}.${fillWithZero(now.getMonth() + 1, 2)}.${fillWithZero(now.getDate(), 2)}.${fillWithZero(now.getTime(), 15)}`
-}
-
 async function createZIP(folderName, prefixName) {
     const filesNames = fs.readdirSync(path.join(rootPath, folderName));
     const files = filesNames.filter(f => f !== '.gitkeep').map(file => path.join(rootPath, folderName, file));
@@ -80,23 +59,12 @@ async function createZIP(folderName, prefixName) {
 }
 
 async function createImagesZIP() {
-    await createZIP('images', 'images');
-}
-
-async function createBackupZIP() {
-    await createZIP('backups', 'backups');
-}
-
-function cleanOldBackups() {
-    const filesNames = fs.readdirSync(path.join(rootPath, 'compress_files'));
-    const files = filesNames.filter(f => f !== '.gitkeep').map(file => path.join(rootPath, 'compress_files', file));
-    files.forEach(f => fs.unlinkSync(f));
+    await createZIP('images', 'images.backup');
 }
 
 async function main() {
-    await cleanOldBackups();
+    await removeFilesStartWith('images.', path.join(rootPath, 'compress_files'));
     await createImagesZIP();
-    await createBackupZIP();
 }
 
 main().then();
