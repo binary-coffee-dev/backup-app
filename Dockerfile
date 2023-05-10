@@ -1,4 +1,4 @@
-FROM node:10.21.0-alpine3.11
+FROM node:16.20.0-alpine3.16
 
 WORKDIR /app
 
@@ -8,15 +8,10 @@ RUN mkdir images
 RUN mkdir compress_files
 
 # Install dependencies
-COPY package.json ./
-COPY package-lock.json ./
+COPY package.json package-lock.json ./
 RUN npm install
 
 # Copy script files auth key
-COPY setup-store.js ./
-COPY compress-files.js ./
-COPY upload.js ./
-COPY cron-app.js ./
-COPY store-key.json ./
+COPY .scripts ./scripts
 
 CMD ["npm", "start"]
