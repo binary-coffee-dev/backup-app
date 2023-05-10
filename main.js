@@ -88,6 +88,6 @@ const server = http.createServer((req, res) => {
 });
 
 const port = process.env.SERVICE_PORT || 6000;
-server.listen(port, '127.0.0.1', () => {
+server.listen(port, () => {
     console.log(`Backup service is running in port: ${port}`);
 });
